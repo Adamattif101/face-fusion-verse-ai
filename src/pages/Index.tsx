@@ -1,16 +1,18 @@
 
 import React, { useState } from 'react';
-import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shield, Zap } from 'lucide-react';
+import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shield, Zap, Shirt } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PhotoUpload from '@/components/PhotoUpload';
 import ResultsDisplay from '@/components/ResultsDisplay';
 import FeatureCard from '@/components/FeatureCard';
 import StatsBar from '@/components/StatsBar';
+import FashionFeed from '@/components/FashionFeed';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
+  const [activeView, setActiveView] = useState<'home' | 'fashion'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
@@ -28,15 +30,21 @@ const Index = () => {
       color: "from-blue-500 to-cyan-400"
     },
     {
+      icon: Shirt,
+      title: "Fashion & Style",
+      description: "Shop celebrity looks, try AR fashion, and get personalized style recommendations",
+      color: "from-pink-500 to-purple-400"
+    },
+    {
       icon: Sparkles,
       title: "AR Try-Ons",
-      description: "Try celebrity hairstyles and makeup in real-time with AR technology",
+      description: "Try celebrity hairstyles, makeup, and outfits in real-time with AR technology",
       color: "from-purple-500 to-pink-400"
     },
     {
       icon: Trophy,
-      title: "Leaderboards",
-      description: "Compete with friends and climb the viral sharing rankings",
+      title: "Style Challenges",
+      description: "Compete in fashion challenges and climb the viral sharing leaderboards",
       color: "from-yellow-500 to-orange-400"
     },
     {
@@ -46,6 +54,16 @@ const Index = () => {
       color: "from-green-500 to-emerald-400"
     }
   ];
+
+  if (showResults) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
+          <ResultsDisplay photoUrl={uploadedPhoto} onBack={() => setShowResults(false)} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
@@ -68,6 +86,21 @@ const Index = () => {
         </div>
         
         <div className="flex items-center space-x-4">
+          <Button
+            variant={activeView === 'home' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('home')}
+            className={activeView === 'home' ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            Home
+          </Button>
+          <Button
+            variant={activeView === 'fashion' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('fashion')}
+            className={activeView === 'fashion' ? 'bg-gradient-to-r from-pink-500 to-purple-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            <Shirt className="w-4 h-4 mr-2" />
+            Fashion
+          </Button>
           <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-white/10">
             Login
           </Button>
@@ -81,7 +114,7 @@ const Index = () => {
       <StatsBar />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
-        {!showResults ? (
+        {activeView === 'home' && (
           <>
             {/* Hero Section */}
             <div className="text-center mb-16">
@@ -94,7 +127,7 @@ const Index = () => {
               </h2>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
                 Upload your photo and let advanced AI find your perfect celebrity, character, or athlete look-alike. 
-                Try AR effects and share your results with the world!
+                Try AR effects, shop their style, and share your results with the world!
               </p>
               
               <div className="flex justify-center items-center space-x-6 mb-12">
@@ -105,6 +138,10 @@ const Index = () => {
                 <div className="flex items-center space-x-2 text-purple-300">
                   <Shield className="w-5 h-5" />
                   <span>100% Private</span>
+                </div>
+                <div className="flex items-center space-x-2 text-pink-300">
+                  <Shirt className="w-5 h-5" />
+                  <span>Shop Their Style</span>
                 </div>
                 <div className="flex items-center space-x-2 text-cyan-300">
                   <Share2 className="w-5 h-5" />
@@ -119,7 +156,7 @@ const Index = () => {
             </div>
 
             {/* Features Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {features.map((feature, index) => (
                 <FeatureCard
                   key={index}
@@ -149,15 +186,18 @@ const Index = () => {
               </div>
             </div>
           </>
-        ) : (
-          <ResultsDisplay photoUrl={uploadedPhoto} onBack={() => setShowResults(false)} />
         )}
+
+        {activeView === 'fashion' && <FashionFeed />}
       </div>
 
       {/* Floating Action Button */}
       <Button 
         className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 shadow-2xl shadow-blue-500/25 z-20"
-        onClick={() => setShowResults(false)}
+        onClick={() => {
+          setActiveView('home');
+          setShowResults(false);
+        }}
       >
         <Upload className="w-6 h-6" />
       </Button>
