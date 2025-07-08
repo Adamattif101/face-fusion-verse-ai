@@ -1,22 +1,25 @@
 
 import React, { useState } from 'react';
-import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shield, Zap, Shirt } from 'lucide-react';
+import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shield, Zap, Shirt, Search, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import PhotoUpload from '@/components/PhotoUpload';
 import ResultsDisplay from '@/components/ResultsDisplay';
 import FeatureCard from '@/components/FeatureCard';
 import StatsBar from '@/components/StatsBar';
 import FashionFeed from '@/components/FashionFeed';
+import SocialFeed from '@/components/SocialFeed';
+import StyleTribes from '@/components/StyleTribes';
+import StyleBoards from '@/components/StyleBoards';
+import TrendingOutfits from '@/components/TrendingOutfits';
+import UserProfile from '@/components/UserProfile';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'fashion'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
-    // Simulate processing delay
     setTimeout(() => {
       setShowResults(true);
     }, 2000);
@@ -25,33 +28,39 @@ const Index = () => {
   const features = [
     {
       icon: Camera,
-      title: "AI Face Analysis",
-      description: "Advanced facial recognition technology finds your perfect celebrity matches",
+      title: "AI Look-Alike Matching",
+      description: "Advanced facial recognition finds your celebrity matches and suggests their signature styles",
       color: "from-blue-500 to-cyan-400"
     },
     {
-      icon: Shirt,
-      title: "Fashion & Style",
-      description: "Shop celebrity looks, try AR fashion, and get personalized style recommendations",
+      icon: Users,
+      title: "Social Fashion Feed",
+      description: "Share your outfits, discover new styles, and connect with your fashion tribe",
       color: "from-pink-500 to-purple-400"
     },
     {
+      icon: TrendingUp,
+      title: "Real-Time Trends",
+      description: "Stay ahead with trending outfits from social media and our community",
+      color: "from-yellow-500 to-orange-400"
+    },
+    {
       icon: Sparkles,
-      title: "AR Try-Ons",
-      description: "Try celebrity hairstyles, makeup, and outfits in real-time with AR technology",
+      title: "AR Virtual Try-On",
+      description: "Try celebrity looks, trending outfits, and community styles in real-time",
       color: "from-purple-500 to-pink-400"
+    },
+    {
+      icon: Grid3X3,
+      title: "Style Boards",
+      description: "Create and curate your personal style collections and mood boards",
+      color: "from-green-500 to-emerald-400"
     },
     {
       icon: Trophy,
       title: "Style Challenges",
-      description: "Compete in fashion challenges and climb the viral sharing leaderboards",
-      color: "from-yellow-500 to-orange-400"
-    },
-    {
-      icon: Shield,
-      title: "Privacy First",
-      description: "Your photos are processed securely and deleted automatically",
-      color: "from-green-500 to-emerald-400"
+      description: "Join fashion challenges, compete with friends, and climb leaderboards",
+      color: "from-red-500 to-rose-400"
     }
   ];
 
@@ -77,35 +86,68 @@ const Index = () => {
       {/* Header */}
       <header className="relative z-10 p-6 flex justify-between items-center border-b border-white/10 backdrop-blur-sm">
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl flex items-center justify-center">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-            Look-Alike AI Hub
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+            StyleMatch AI
           </h1>
         </div>
         
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <Button
             variant={activeView === 'home' ? 'default' : 'ghost'}
             onClick={() => setActiveView('home')}
-            className={activeView === 'home' ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            className={activeView === 'home' ? 'bg-gradient-to-r from-pink-500 to-purple-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
           >
             Home
           </Button>
           <Button
+            variant={activeView === 'social' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('social')}
+            className={activeView === 'social' ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Social
+          </Button>
+          <Button
+            variant={activeView === 'trending' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('trending')}
+            className={activeView === 'trending' ? 'bg-gradient-to-r from-yellow-500 to-orange-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Trending
+          </Button>
+          <Button
             variant={activeView === 'fashion' ? 'default' : 'ghost'}
             onClick={() => setActiveView('fashion')}
-            className={activeView === 'fashion' ? 'bg-gradient-to-r from-pink-500 to-purple-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            className={activeView === 'fashion' ? 'bg-gradient-to-r from-purple-500 to-pink-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
           >
             <Shirt className="w-4 h-4 mr-2" />
             Fashion
           </Button>
-          <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-white/10">
-            Login
+          <Button
+            variant={activeView === 'tribes' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('tribes')}
+            className={activeView === 'tribes' ? 'bg-gradient-to-r from-green-500 to-emerald-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            Tribes
           </Button>
-          <Button className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-medium">
-            Get Started
+          <Button
+            variant={activeView === 'boards' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('boards')}
+            className={activeView === 'boards' ? 'bg-gradient-to-r from-red-500 to-rose-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            <Grid3X3 className="w-4 h-4 mr-2" />
+            Boards
+          </Button>
+          <Button
+            variant={activeView === 'profile' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('profile')}
+            className={activeView === 'profile' ? 'bg-gradient-to-r from-indigo-500 to-blue-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+          >
+            <User className="w-4 h-4 mr-2" />
+            Profile
           </Button>
         </div>
       </header>
@@ -118,34 +160,34 @@ const Index = () => {
           <>
             {/* Hero Section */}
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-cyan-300 bg-clip-text text-transparent leading-tight">
-                Discover Your
+              <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-pink-200 to-purple-300 bg-clip-text text-transparent leading-tight">
+                Find Your Style
                 <br />
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Celebrity Twin
+                <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  Match & Connect
                 </span>
               </h2>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Upload your photo and let advanced AI find your perfect celebrity, character, or athlete look-alike. 
-                Try AR effects, shop their style, and share your results with the world!
+                Discover your celebrity look-alike, shop their style, share your outfits, 
+                and connect with your fashion tribe. Join the ultimate style community!
               </p>
               
               <div className="flex justify-center items-center space-x-6 mb-12">
-                <div className="flex items-center space-x-2 text-blue-300">
-                  <Zap className="w-5 h-5" />
-                  <span>Instant Results</span>
+                <div className="flex items-center space-x-2 text-pink-300">
+                  <Camera className="w-5 h-5" />
+                  <span>AI Matching</span>
                 </div>
                 <div className="flex items-center space-x-2 text-purple-300">
-                  <Shield className="w-5 h-5" />
-                  <span>100% Private</span>
+                  <Users className="w-5 h-5" />
+                  <span>Style Community</span>
                 </div>
-                <div className="flex items-center space-x-2 text-pink-300">
-                  <Shirt className="w-5 h-5" />
-                  <span>Shop Their Style</span>
+                <div className="flex items-center space-x-2 text-blue-300">
+                  <TrendingUp className="w-5 h-5" />
+                  <span>Real-Time Trends</span>
                 </div>
-                <div className="flex items-center space-x-2 text-cyan-300">
-                  <Share2 className="w-5 h-5" />
-                  <span>Viral Ready</span>
+                <div className="flex items-center space-x-2 text-green-300">
+                  <Sparkles className="w-5 h-5" />
+                  <span>AR Try-On</span>
                 </div>
               </div>
             </div>
@@ -171,29 +213,34 @@ const Index = () => {
 
             {/* Social Proof */}
             <div className="text-center">
-              <p className="text-gray-400 mb-4">Trusted by thousands of users worldwide</p>
+              <p className="text-gray-400 mb-4">Join the style revolution</p>
               <div className="flex justify-center items-center space-x-8 opacity-60">
-                <div className="text-2xl font-bold text-blue-400">500K+</div>
+                <div className="text-2xl font-bold text-pink-400">2M+</div>
                 <div className="text-gray-500">•</div>
-                <div className="text-2xl font-bold text-purple-400">1M+</div>
+                <div className="text-2xl font-bold text-purple-400">5M+</div>
                 <div className="text-gray-500">•</div>
-                <div className="text-2xl font-bold text-cyan-400">50K+</div>
+                <div className="text-2xl font-bold text-cyan-400">100K+</div>
               </div>
               <div className="flex justify-center items-center space-x-8 text-sm text-gray-500 mt-2">
-                <span>Photos Analyzed</span>
-                <span>Matches Found</span>
-                <span>Happy Users</span>
+                <span>Style Matches</span>
+                <span>Outfits Shared</span>
+                <span>Active Stylists</span>
               </div>
             </div>
           </>
         )}
 
+        {activeView === 'social' && <SocialFeed />}
         {activeView === 'fashion' && <FashionFeed />}
+        {activeView === 'trending' && <TrendingOutfits />}
+        {activeView === 'tribes' && <StyleTribes />}
+        {activeView === 'boards' && <StyleBoards />}
+        {activeView === 'profile' && <UserProfile />}
       </div>
 
       {/* Floating Action Button */}
       <Button 
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 shadow-2xl shadow-blue-500/25 z-20"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 shadow-2xl shadow-pink-500/25 z-20"
         onClick={() => {
           setActiveView('home');
           setShowResults(false);
