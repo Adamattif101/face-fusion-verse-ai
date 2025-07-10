@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shirt, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,8 @@ const Index = () => {
       setActiveView('fashion-social');
     } else if (featureTitle === "Real-Time Trends") {
       setActiveView('trends-landing');
+    } else if (featureTitle === "Style Community") {
+      setActiveView('social');
     }
   };
 
