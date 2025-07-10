@@ -50,6 +50,21 @@ const Index = () => {
     }
   };
 
+  const handleFabClick = () => {
+    // If not on home, go to home first, then trigger upload
+    if (activeView !== 'home') {
+      setActiveView('home');
+      setShowPostCreation(false);
+      setUploadedPhoto(null);
+    }
+    
+    // Trigger the photo upload by simulating a click on the upload area
+    const uploadButton = document.querySelector('[data-upload-trigger]') as HTMLElement;
+    if (uploadButton) {
+      uploadButton.click();
+    }
+  };
+
   const features = [
     {
       icon: Users,
@@ -264,13 +279,11 @@ const Index = () => {
 
       {/* Floating Action Button */}
       <Button 
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 shadow-2xl shadow-pink-500/25 z-20"
-        onClick={() => {
-          setActiveView('home');
-          setShowPostCreation(false);
-        }}
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 shadow-2xl shadow-pink-500/25 z-20 transition-all duration-300 hover:scale-110"
+        onClick={handleFabClick}
+        title="Share Your Style"
       >
-        <Upload className="w-6 h-6" />
+        <Camera className="w-6 h-6" />
       </Button>
     </div>
   );
