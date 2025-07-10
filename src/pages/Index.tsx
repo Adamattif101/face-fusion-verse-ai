@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shirt, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,11 +13,12 @@ import TrendingOutfits from '@/components/TrendingOutfits';
 import UserProfile from '@/components/UserProfile';
 import FashionSocialLanding from '@/components/FashionSocialLanding';
 import TrendsLanding from '@/components/TrendsLanding';
+import StyleChallenges from '@/components/StyleChallenges';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showPostCreation, setShowPostCreation] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social' | 'trends-landing'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social' | 'trends-landing' | 'challenges'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
@@ -42,6 +42,8 @@ const Index = () => {
       setActiveView('social');
     } else if (featureTitle === "Style Boards") {
       setActiveView('boards');
+    } else if (featureTitle === "Style Challenges") {
+      setActiveView('challenges');
     }
   };
 
@@ -253,6 +255,7 @@ const Index = () => {
         {activeView === 'profile' && <UserProfile />}
         {activeView === 'fashion-social' && <FashionSocialLanding onBackToHome={() => setActiveView('home')} />}
         {activeView === 'trends-landing' && <TrendsLanding onBackToHome={() => setActiveView('home')} />}
+        {activeView === 'challenges' && <StyleChallenges />}
       </div>
 
       {/* Floating Action Button */}
