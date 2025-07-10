@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shield, Zap, Shirt, Search, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
+import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shirt, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PhotoUpload from '@/components/PhotoUpload';
 import ResultsDisplay from '@/components/ResultsDisplay';
@@ -22,19 +22,13 @@ const Index = () => {
     setUploadedPhoto(photoUrl);
     setTimeout(() => {
       setShowResults(true);
-    }, 2000);
+    }, 1500);
   };
 
   const features = [
     {
-      icon: Camera,
-      title: "AI Look-Alike Matching",
-      description: "Advanced facial recognition finds your celebrity matches and suggests their signature styles",
-      color: "from-blue-500 to-cyan-400"
-    },
-    {
       icon: Users,
-      title: "Social Fashion Feed",
+      title: "Fashion Social Feed",
       description: "Share your outfits, discover new styles, and connect with your fashion tribe",
       color: "from-pink-500 to-purple-400"
     },
@@ -45,10 +39,10 @@ const Index = () => {
       color: "from-yellow-500 to-orange-400"
     },
     {
-      icon: Sparkles,
-      title: "AR Virtual Try-On",
-      description: "Try celebrity looks, trending outfits, and community styles in real-time",
-      color: "from-purple-500 to-pink-400"
+      icon: Heart,
+      title: "Style Community",
+      description: "Like, comment, and save your favorite looks from fashion enthusiasts",
+      color: "from-red-500 to-pink-400"
     },
     {
       icon: Grid3X3,
@@ -57,16 +51,22 @@ const Index = () => {
       color: "from-green-500 to-emerald-400"
     },
     {
-      icon: Trophy,
+      icon: Sparkles,
       title: "Style Challenges",
-      description: "Join fashion challenges, compete with friends, and climb leaderboards",
-      color: "from-red-500 to-rose-400"
+      description: "Join weekly fashion challenges and compete with the community",
+      color: "from-purple-500 to-pink-400"
+    },
+    {
+      icon: Trophy,
+      title: "Fashion Rewards",
+      description: "Earn style points, badges, and unlock exclusive features",
+      color: "from-blue-500 to-cyan-400"
     }
   ];
 
   if (showResults) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-pink-900 to-purple-900 text-white">
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
           <ResultsDisplay photoUrl={uploadedPhoto} onBack={() => setShowResults(false)} />
         </div>
@@ -75,7 +75,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-pink-900 to-purple-900 text-white overflow-hidden">
       {/* Background Effects */}
       <div className="fixed inset-0 opacity-20">
         <div className="w-full h-full bg-repeat" style={{
@@ -161,21 +161,21 @@ const Index = () => {
             {/* Hero Section */}
             <div className="text-center mb-16">
               <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-pink-200 to-purple-300 bg-clip-text text-transparent leading-tight">
-                Find Your Style
+                Share Your Style
                 <br />
                 <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-                  Match & Connect
+                  Connect & Inspire
                 </span>
               </h2>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Discover your celebrity look-alike, shop their style, share your outfits, 
-                and connect with your fashion tribe. Join the ultimate style community!
+                Join the ultimate fashion community. Share your outfits, discover trending styles, 
+                and connect with fashion enthusiasts from around the world!
               </p>
               
               <div className="flex justify-center items-center space-x-6 mb-12">
                 <div className="flex items-center space-x-2 text-pink-300">
                   <Camera className="w-5 h-5" />
-                  <span>AI Matching</span>
+                  <span>Share Outfits</span>
                 </div>
                 <div className="flex items-center space-x-2 text-purple-300">
                   <Users className="w-5 h-5" />
@@ -183,11 +183,11 @@ const Index = () => {
                 </div>
                 <div className="flex items-center space-x-2 text-blue-300">
                   <TrendingUp className="w-5 h-5" />
-                  <span>Real-Time Trends</span>
+                  <span>Trending Styles</span>
                 </div>
                 <div className="flex items-center space-x-2 text-green-300">
-                  <Sparkles className="w-5 h-5" />
-                  <span>AR Try-On</span>
+                  <Heart className="w-5 h-5" />
+                  <span>Fashion Love</span>
                 </div>
               </div>
             </div>
@@ -213,18 +213,18 @@ const Index = () => {
 
             {/* Social Proof */}
             <div className="text-center">
-              <p className="text-gray-400 mb-4">Join the style revolution</p>
+              <p className="text-gray-400 mb-4">Join the fashion revolution</p>
               <div className="flex justify-center items-center space-x-8 opacity-60">
-                <div className="text-2xl font-bold text-pink-400">2M+</div>
+                <div className="text-2xl font-bold text-pink-400">500K+</div>
                 <div className="text-gray-500">•</div>
-                <div className="text-2xl font-bold text-purple-400">5M+</div>
+                <div className="text-2xl font-bold text-purple-400">2M+</div>
                 <div className="text-gray-500">•</div>
-                <div className="text-2xl font-bold text-cyan-400">100K+</div>
+                <div className="text-2xl font-bold text-cyan-400">50K+</div>
               </div>
               <div className="flex justify-center items-center space-x-8 text-sm text-gray-500 mt-2">
-                <span>Style Matches</span>
-                <span>Outfits Shared</span>
-                <span>Active Stylists</span>
+                <span>Style Posts</span>
+                <span>Likes & Saves</span>
+                <span>Fashion Creators</span>
               </div>
             </div>
           </>

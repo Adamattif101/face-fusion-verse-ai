@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, Share2, Download, Star, Sparkles, Trophy, Camera, Shirt } from 'lucide-react';
+import { ArrowLeft, Share2, Download, Heart, Sparkles, Trophy, Camera, Shirt, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,36 +12,25 @@ interface ResultsDisplayProps {
 }
 
 const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ photoUrl, onBack }) => {
-  const [activeTab, setActiveTab] = useState<'matches' | 'fashion'>('matches');
+  const [activeTab, setActiveTab] = useState<'share' | 'fashion'>('share');
+  const [caption, setCaption] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [posted, setPosted] = useState(false);
   
-  const matches = [
-    { 
-      name: "Ryan Reynolds", 
-      similarity: 94, 
-      category: "Actor",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      description: "Canadian actor and producer known for Deadpool"
-    },
-    { 
-      name: "Chris Evans", 
-      similarity: 89, 
-      category: "Actor",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-      description: "American actor famous for Captain America"
-    },
-    { 
-      name: "Michael B. Jordan", 
-      similarity: 85, 
-      category: "Actor",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
-      description: "American actor and producer"
-    }
-  ];
+  const suggestedTags = ['#OOTD', '#StreetStyle', '#Fashion', '#Style', '#Trendy', '#Outfit', '#Look'];
 
-  const topMatch = matches[0];
+  const addTag = (tag: string) => {
+    if (!tags.includes(tag)) {
+      setTags([...tags, tag]);
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    setTags(tags.filter(tag => tag !== tagToRemove));
+  };
 
   const shareToSocial = (platform: string) => {
-    const text = "Check out my celebrity look-alike results from Look-Alike AI Hub! 🤖✨";
+    const text = "Check out my latest style post on StyleMatch AI! ✨👗";
     const url = window.location.href;
     
     switch (platform) {
@@ -52,8 +41,14 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ photoUrl, onBack }) => 
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
         break;
       default:
-        navigator.share({ title: 'Look-Alike AI Results', text, url });
+        navigator.share({ title: 'StyleMatch AI', text, url });
     }
+  };
+
+  const handlePost = () => {
+    setPosted(true);
+    // Here you would typically send the post to your backend
+    console.log('Posting outfit:', { photoUrl, caption, tags });
   };
 
   return (
@@ -71,28 +66,28 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ photoUrl, onBack }) => 
         
         <div className="flex items-center space-x-2">
           <Trophy className="w-5 h-5 text-yellow-400" />
-          <span className="text-yellow-400 font-medium">+50 Points</span>
+          <span className="text-yellow-400 font-medium">+10 Style Points</span>
         </div>
       </div>
 
       {/* Results Header */}
       <div className="text-center">
-        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-          Your Celebrity Matches
+        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+          Share Your Style
         </h2>
-        <p className="text-gray-300">We found some amazing look-alikes for you!</p>
+        <p className="text-gray-300">Add details and share with the fashion community!</p>
       </div>
 
       {/* Tab Navigation */}
       <div className="flex justify-center">
         <div className="bg-white/10 p-1 rounded-lg backdrop-blur-sm">
           <Button
-            variant={activeTab === 'matches' ? 'default' : 'ghost'}
-            onClick={() => setActiveTab('matches')}
-            className={activeTab === 'matches' ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            variant={activeTab === 'share' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('share')}
+            className={activeTab === 'share' ? 'bg-gradient-to-r from-pink-500 to-purple-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
           >
-            <Star className="w-4 h-4 mr-2" />
-            Matches
+            <Camera className="w-4 h-4 mr-2" />
+            Share Post
           </Button>
           <Button
             variant={activeTab === 'fashion' ? 'default' : 'ghost'}
@@ -100,123 +95,137 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ photoUrl, onBack }) => 
             className={activeTab === 'fashion' ? 'bg-gradient-to-r from-purple-500 to-pink-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
           >
             <Shirt className="w-4 h-4 mr-2" />
-            Fashion
+            Shop Style
           </Button>
         </div>
       </div>
 
-      {activeTab === 'matches' && (
+      {activeTab === 'share' && (
         <>
-          {/* Original Photo */}
+          {/* Photo Preview */}
           <div className="flex justify-center mb-8">
-            <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
+            <Card className="bg-white/10 border-white/20 backdrop-blur-sm max-w-md">
               <CardContent className="p-4">
-                <div className="text-center mb-4">
-                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30">
-                    Your Photo
-                  </Badge>
-                </div>
                 <img 
                   src={photoUrl || ''} 
-                  alt="Your photo" 
-                  className="w-32 h-32 rounded-lg object-cover mx-auto border-2 border-white/20"
+                  alt="Your outfit" 
+                  className="w-full rounded-lg object-cover border-2 border-white/20"
                 />
               </CardContent>
             </Card>
           </div>
 
-          {/* Matches Grid */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {matches.map((match, index) => (
-              <Card 
-                key={index}
-                className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/15 transition-all duration-300 hover:scale-105 group"
-              >
-                <CardContent className="p-6 text-center">
-                  <div className="relative mb-4">
-                    <img 
-                      src={match.image} 
-                      alt={match.name}
-                      className="w-24 h-24 rounded-full object-cover mx-auto border-2 border-white/20 group-hover:border-blue-400/50 transition-colors"
-                    />
-                    <div className="absolute -top-2 -right-2">
-                      <Badge className={`${
-                        index === 0 ? 'bg-yellow-500/20 text-yellow-300 border-yellow-400/30' :
-                        index === 1 ? 'bg-gray-500/20 text-gray-300 border-gray-400/30' :
-                        'bg-orange-500/20 text-orange-300 border-orange-400/30'
-                      }`}>
-                        #{index + 1}
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-2">{match.name}</h3>
-                  <p className="text-gray-400 text-sm mb-3">{match.description}</p>
-                  
-                  <div className="flex items-center justify-center space-x-2 mb-4">
-                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-2xl font-bold text-white">{match.similarity}%</span>
-                    <span className="text-gray-400 text-sm">match</span>
-                  </div>
-                  
-                  <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">
-                    {match.category}
-                  </Badge>
+          {!posted ? (
+            <div className="max-w-2xl mx-auto space-y-6">
+              {/* Caption Input */}
+              <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <label className="block text-white font-medium mb-3">Caption</label>
+                  <textarea
+                    value={caption}
+                    onChange={(e) => setCaption(e.target.value)}
+                    placeholder="Tell us about your outfit..."
+                    className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 resize-none h-24 focus:outline-none focus:border-pink-400"
+                  />
                 </CardContent>
               </Card>
-            ))}
-          </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 pt-8">
-            <Button 
-              className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-medium"
-              onClick={() => shareToSocial('twitter')}
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              Share Results
-            </Button>
-            
-            <Button 
-              variant="outline"
-              className="border-white/20 text-white hover:bg-white/10"
-              onClick={() => setActiveTab('fashion')}
-            >
-              <Shirt className="w-4 h-4 mr-2" />
-              Shop Their Style
-            </Button>
-            
-            <Button 
-              variant="outline"
-              className="border-white/20 text-white hover:bg-white/10"
-            >
-              <Camera className="w-4 h-4 mr-2" />
-              Try AR Effects
-            </Button>
-            
-            <Button 
-              variant="outline"
-              className="border-white/20 text-white hover:bg-white/10"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Save Results
-            </Button>
-          </div>
+              {/* Tags Section */}
+              <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <label className="block text-white font-medium mb-3">Tags</label>
+                  
+                  {/* Selected Tags */}
+                  {tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {tags.map((tag, index) => (
+                        <Badge 
+                          key={index} 
+                          className="bg-pink-500/20 text-pink-300 border-pink-400/30 cursor-pointer hover:bg-pink-500/30"
+                          onClick={() => removeTag(tag)}
+                        >
+                          {tag} ×
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Suggested Tags */}
+                  <div className="space-y-2">
+                    <p className="text-sm text-gray-400">Suggested tags:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {suggestedTags.filter(tag => !tags.includes(tag)).map((tag, index) => (
+                        <Badge 
+                          key={index}
+                          variant="outline" 
+                          className="border-white/20 text-white hover:bg-white/10 cursor-pointer"
+                          onClick={() => addTag(tag)}
+                        >
+                          <Tag className="w-3 h-3 mr-1" />
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Post Button */}
+              <div className="text-center">
+                <Button 
+                  onClick={handlePost}
+                  className="bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 text-white font-medium px-12 py-3 text-lg"
+                >
+                  <Heart className="w-5 h-5 mr-2" />
+                  Share with Community
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center space-y-6">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-r from-pink-500 to-purple-400 rounded-full flex items-center justify-center">
+                <Heart className="w-10 h-10 text-white fill-current" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-2">Style Shared!</h3>
+                <p className="text-gray-300">Your outfit is now live in the community feed</p>
+              </div>
+              
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button 
+                  className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-medium"
+                  onClick={() => shareToSocial('twitter')}
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Share on Social
+                </Button>
+                
+                <Button 
+                  variant="outline"
+                  className="border-white/20 text-white hover:bg-white/10"
+                  onClick={onBack}
+                >
+                  <Camera className="w-4 h-4 mr-2" />
+                  Share Another
+                </Button>
+              </div>
+            </div>
+          )}
         </>
       )}
 
-      {activeTab === 'fashion' && <FashionFeatures celebrityName={topMatch.name} />}
+      {activeTab === 'fashion' && <FashionFeatures celebrityName="Similar Styles" />}
 
-      {/* Social Challenge */}
+      {/* Community Challenge */}
       <Card className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-400/30 backdrop-blur-sm">
         <CardContent className="p-6 text-center">
           <Sparkles className="w-8 h-8 text-purple-300 mx-auto mb-3" />
-          <h3 className="text-xl font-bold text-white mb-2">Share & Earn Rewards!</h3>
+          <h3 className="text-xl font-bold text-white mb-2">Join Weekly Style Challenge!</h3>
           <p className="text-gray-300 mb-4">
-            Share your results and challenge 3 friends to unlock premium AR effects and fashion features
+            This week: "Sustainable Fashion" - Share your eco-friendly outfit for a chance to win style rewards
           </p>
           <Button className="bg-gradient-to-r from-purple-500 to-pink-400 hover:from-purple-600 hover:to-pink-500 text-white">
-            Start Challenge
+            Join Challenge
           </Button>
         </CardContent>
       </Card>

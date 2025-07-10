@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { Upload, Camera, Sparkles, X } from 'lucide-react';
+import { Upload, Camera, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -49,7 +49,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
         setTimeout(() => {
           setUploading(false);
           onPhotoUpload(result);
-        }, 1500);
+        }, 1000);
       };
       reader.readAsDataURL(file);
     }
@@ -64,8 +64,8 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
       <Card 
         className={`relative overflow-hidden border-2 border-dashed transition-all duration-300 bg-white/5 backdrop-blur-sm ${
           dragActive 
-            ? 'border-blue-400 bg-blue-500/10 scale-105' 
-            : 'border-white/20 hover:border-blue-400/50 hover:bg-white/10'
+            ? 'border-pink-400 bg-pink-500/10 scale-105' 
+            : 'border-white/20 hover:border-pink-400/50 hover:bg-white/10'
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -76,50 +76,50 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
           {uploading ? (
             <div className="space-y-6">
               <div className="relative">
-                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center animate-pulse">
+                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-400 flex items-center justify-center animate-pulse">
                   <Sparkles className="w-10 h-10 text-white animate-spin" />
                 </div>
-                <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-blue-400/30 border-t-blue-400 animate-spin"></div>
+                <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-pink-400/30 border-t-pink-400 animate-spin"></div>
               </div>
               <div>
-                <p className="text-xl font-semibold text-white mb-2">Analyzing Your Photo</p>
-                <p className="text-gray-300">Our AI is finding your perfect matches...</p>
+                <p className="text-xl font-semibold text-white mb-2">Uploading Your Style</p>
+                <p className="text-gray-300">Getting ready to share with your fashion community...</p>
               </div>
               <div className="w-full bg-white/10 rounded-full h-2">
-                <div className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full animate-pulse" style={{width: '60%'}}></div>
+                <div className="bg-gradient-to-r from-pink-500 to-purple-400 h-2 rounded-full animate-pulse" style={{width: '80%'}}></div>
               </div>
             </div>
           ) : (
             <div className="space-y-6">
               <div className="relative">
-                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Camera className="w-10 h-10 text-white" />
                 </div>
                 {dragActive && (
-                  <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-blue-400 animate-ping"></div>
+                  <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-pink-400 animate-ping"></div>
                 )}
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">Upload Your Photo</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">Share Your Style</h3>
                 <p className="text-gray-300 mb-6">
-                  Drag and drop your image here, or click to browse
+                  Upload your outfit and share it with the fashion community
                 </p>
               </div>
 
               <div className="space-y-4">
                 <Button 
                   onClick={openFileDialog}
-                  className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-medium px-8 py-3 text-lg group"
+                  className="bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 text-white font-medium px-8 py-3 text-lg group"
                 >
                   <Upload className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                  Choose Photo
+                  Upload Outfit
                 </Button>
                 
                 <div className="flex items-center justify-center space-x-6 text-sm text-gray-400">
                   <span>✓ JPG, PNG, WebP</span>
                   <span>✓ Max 10MB</span>
-                  <span>✓ Auto-deleted</span>
+                  <span>✓ Share instantly</span>
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
         
         {/* Animated background effect */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 animate-pulse"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-pink-500/20 to-purple-500/20 animate-pulse"></div>
         </div>
       </Card>
 
