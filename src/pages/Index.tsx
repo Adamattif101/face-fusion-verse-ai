@@ -14,11 +14,12 @@ import UserProfile from '@/components/UserProfile';
 import FashionSocialLanding from '@/components/FashionSocialLanding';
 import TrendsLanding from '@/components/TrendsLanding';
 import StyleChallenges from '@/components/StyleChallenges';
+import FashionRewards from '@/components/FashionRewards';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showPostCreation, setShowPostCreation] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social' | 'trends-landing' | 'challenges'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social' | 'trends-landing' | 'challenges' | 'rewards'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
@@ -44,6 +45,8 @@ const Index = () => {
       setActiveView('boards');
     } else if (featureTitle === "Style Challenges") {
       setActiveView('challenges');
+    } else if (featureTitle === "Fashion Rewards") {
+      setActiveView('rewards');
     }
   };
 
@@ -256,6 +259,7 @@ const Index = () => {
         {activeView === 'fashion-social' && <FashionSocialLanding onBackToHome={() => setActiveView('home')} />}
         {activeView === 'trends-landing' && <TrendsLanding onBackToHome={() => setActiveView('home')} />}
         {activeView === 'challenges' && <StyleChallenges />}
+        {activeView === 'rewards' && <FashionRewards />}
       </div>
 
       {/* Floating Action Button */}
