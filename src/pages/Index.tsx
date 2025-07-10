@@ -15,14 +15,20 @@ import UserProfile from '@/components/UserProfile';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
-  const [showResults, setShowResults] = useState(false);
+  const [showPostCreation, setShowPostCreation] = useState(false);
   const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
     setTimeout(() => {
-      setShowResults(true);
+      setShowPostCreation(true);
     }, 1500);
+  };
+
+  const handleBackToHome = () => {
+    setShowPostCreation(false);
+    setUploadedPhoto(null);
+    setActiveView('home');
   };
 
   const features = [
@@ -64,14 +70,8 @@ const Index = () => {
     }
   ];
 
-  if (showResults) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-pink-900 to-purple-900 text-white">
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
-          <ResultsDisplay photoUrl={uploadedPhoto} onBack={() => setShowResults(false)} />
-        </div>
-      </div>
-    );
+  if (showPostCreation) {
+    return <ResultsDisplay photoUrl={uploadedPhoto} onBack={handleBackToHome} />;
   }
 
   return (
@@ -243,7 +243,7 @@ const Index = () => {
         className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 shadow-2xl shadow-pink-500/25 z-20"
         onClick={() => {
           setActiveView('home');
-          setShowResults(false);
+          setShowPostCreation(false);
         }}
       >
         <Upload className="w-6 h-6" />
