@@ -40,6 +40,8 @@ const Index = () => {
       setActiveView('trends-landing');
     } else if (featureTitle === "Style Community") {
       setActiveView('social');
+    } else if (featureTitle === "Style Boards") {
+      setActiveView('boards');
     }
   };
 
