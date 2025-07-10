@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { Upload, Camera, Sparkles, Plus, Image } from 'lucide-react';
+import { Upload, Camera, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -49,7 +49,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
         setTimeout(() => {
           setUploading(false);
           onPhotoUpload(result);
-        }, 1200);
+        }, 1000);
       };
       reader.readAsDataURL(file);
     }
@@ -60,13 +60,13 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-2xl mx-auto">
       <Card 
-        className={`relative overflow-hidden border-2 transition-all duration-300 cursor-pointer group ${
+        className={`relative overflow-hidden border-2 border-dashed transition-all duration-300 bg-white/5 backdrop-blur-sm cursor-pointer ${
           dragActive 
-            ? 'border-primary bg-primary/5 scale-[1.02] shadow-lg' 
-            : 'border-border hover:border-primary/50 hover:shadow-md hover:scale-[1.01]'
-        } ${uploading ? 'pointer-events-none' : ''}`}
+            ? 'border-pink-400 bg-pink-500/10 scale-105' 
+            : 'border-white/20 hover:border-pink-400/50 hover:bg-white/10'
+        }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
@@ -75,75 +75,63 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
       >
         <CardContent className="p-12 text-center">
           {uploading ? (
-            <div className="space-y-6 animate-fade-in">
+            <div className="space-y-6">
               <div className="relative">
-                <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
-                  <Sparkles className="w-8 h-8 text-primary-foreground animate-spin" />
+                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-400 flex items-center justify-center animate-pulse">
+                  <Sparkles className="w-10 h-10 text-white animate-spin" />
                 </div>
-                <div className="absolute inset-0 w-16 h-16 mx-auto rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+                <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-pink-400/30 border-t-pink-400 animate-spin"></div>
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Uploading your style...</h3>
-                <p className="text-muted-foreground">Getting everything ready</p>
+                <p className="text-xl font-semibold text-white mb-2">Uploading Your Style</p>
+                <p className="text-gray-300">Preparing your post...</p>
               </div>
-              <div className="w-full bg-muted rounded-full h-1.5">
-                <div className="bg-gradient-to-r from-primary to-secondary h-1.5 rounded-full animate-pulse" style={{width: '75%'}}></div>
+              <div className="w-full bg-white/10 rounded-full h-2">
+                <div className="bg-gradient-to-r from-pink-500 to-purple-400 h-2 rounded-full animate-pulse" style={{width: '80%'}}></div>
               </div>
             </div>
           ) : (
             <div className="space-y-6">
               <div className="relative">
-                <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center transition-transform duration-300 ${dragActive ? 'scale-110' : 'group-hover:scale-105'}`}>
-                  {dragActive ? (
-                    <Plus className="w-10 h-10 text-primary-foreground" />
-                  ) : (
-                    <Camera className="w-10 h-10 text-primary-foreground" />
-                  )}
+                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-400 flex items-center justify-center hover:scale-110 transition-transform">
+                  <Camera className="w-10 h-10 text-white" />
                 </div>
                 {dragActive && (
-                  <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-primary animate-ping"></div>
+                  <div className="absolute inset-0 w-20 h-20 mx-auto rounded-full border-4 border-pink-400 animate-ping"></div>
                 )}
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">
-                  {dragActive ? 'Drop to upload' : 'Share your outfit'}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {dragActive 
-                    ? 'Release to start uploading' 
-                    : 'Drag a photo here or click to browse'
-                  }
+                <h3 className="text-2xl font-bold text-white mb-2">Share Your Style</h3>
+                <p className="text-gray-300 mb-6">
+                  Upload your outfit and share it with the fashion community
                 </p>
               </div>
 
               <div className="space-y-4">
                 <Button 
-                  className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground font-medium px-8 py-3 text-base group-hover:shadow-lg transition-all duration-300"
-                  size="lg"
+                  className="bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 text-white font-medium px-8 py-3 text-lg group"
                 >
-                  <Image className="w-5 h-5 mr-2" />
-                  Choose from gallery
+                  <Upload className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                  Upload Your Style
                 </Button>
                 
-                <div className="flex items-center justify-center space-x-6 text-xs text-muted-foreground">
-                  <span className="flex items-center">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full mr-1"></div>
-                    JPG, PNG supported
-                  </span>
-                  <span className="flex items-center">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full mr-1"></div>
-                    Up to 10MB
-                  </span>
+                <div className="flex items-center justify-center space-x-6 text-sm text-gray-400">
+                  <span>✓ JPG, PNG, WebP</span>
+                  <span>✓ Max 10MB</span>
+                  <span>✓ Share instantly</span>
                 </div>
               </div>
             </div>
           )}
         </CardContent>
         
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20"></div>
+        {/* Enhanced animated background effect */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-pink-500/30 to-purple-500/30 animate-pulse"></div>
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0s'}}></div>
+          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
         </div>
       </Card>
 
