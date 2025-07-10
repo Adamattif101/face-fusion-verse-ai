@@ -9,6 +9,7 @@ interface FeatureCardProps {
   description: string;
   color: string;
   delay?: number;
+  onClick?: () => void;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ 
@@ -16,12 +17,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   title, 
   description, 
   color,
-  delay = 0 
+  delay = 0,
+  onClick 
 }) => {
   return (
     <Card 
-      className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/15 transition-all duration-300 hover:scale-105 group animate-fade-in"
+      className={`bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/15 transition-all duration-300 hover:scale-105 group animate-fade-in ${
+        onClick ? 'cursor-pointer' : ''
+      }`}
       style={{ animationDelay: `${delay}s` }}
+      onClick={onClick}
     >
       <CardContent className="p-6 text-center">
         <div className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>

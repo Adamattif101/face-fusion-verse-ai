@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shirt, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,11 +12,12 @@ import StyleBoards from '@/components/StyleBoards';
 import TrendingOutfits from '@/components/TrendingOutfits';
 import UserProfile from '@/components/UserProfile';
 import FashionSocialLanding from '@/components/FashionSocialLanding';
+import TrendsLanding from '@/components/TrendsLanding';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showPostCreation, setShowPostCreation] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social' | 'trends-landing'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
@@ -35,6 +35,8 @@ const Index = () => {
   const handleFeatureCardClick = (featureTitle: string) => {
     if (featureTitle === "Fashion Social Feed") {
       setActiveView('fashion-social');
+    } else if (featureTitle === "Real-Time Trends") {
+      setActiveView('trends-landing');
     }
   };
 
@@ -207,15 +209,15 @@ const Index = () => {
             {/* Features Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {features.map((feature, index) => (
-                <div key={index} onClick={() => handleFeatureCardClick(feature.title)} className="cursor-pointer">
-                  <FeatureCard
-                    icon={feature.icon}
-                    title={feature.title}
-                    description={feature.description}
-                    color={feature.color}
-                    delay={index * 0.1}
-                  />
-                </div>
+                <FeatureCard
+                  key={index}
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                  color={feature.color}
+                  delay={index * 0.1}
+                  onClick={() => handleFeatureCardClick(feature.title)}
+                />
               ))}
             </div>
 
@@ -245,6 +247,7 @@ const Index = () => {
         {activeView === 'boards' && <StyleBoards />}
         {activeView === 'profile' && <UserProfile />}
         {activeView === 'fashion-social' && <FashionSocialLanding onBackToHome={() => setActiveView('home')} />}
+        {activeView === 'trends-landing' && <TrendsLanding onBackToHome={() => setActiveView('home')} />}
       </div>
 
       {/* Floating Action Button */}
