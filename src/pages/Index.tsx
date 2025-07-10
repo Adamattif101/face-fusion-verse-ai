@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shirt, Heart, User, TrendingUp, Grid3X3 } from 'lucide-react';
+import { Camera, Upload, Sparkles, Users, Trophy, Share2, Shirt, Heart, User, TrendingUp, Grid3X3, UserPlus, Award, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PhotoUpload from '@/components/PhotoUpload';
 import ResultsDisplay from '@/components/ResultsDisplay';
@@ -12,11 +12,15 @@ import StyleTribes from '@/components/StyleTribes';
 import StyleBoards from '@/components/StyleBoards';
 import TrendingOutfits from '@/components/TrendingOutfits';
 import UserProfile from '@/components/UserProfile';
+import GameRewards from '@/components/GameRewards';
+import FriendsSystem from '@/components/FriendsSystem';
+import Leaderboard from '@/components/Leaderboard';
+import MiniChallenges from '@/components/MiniChallenges';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'rewards' | 'friends' | 'leaderboard' | 'challenges'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
@@ -51,22 +55,22 @@ const Index = () => {
       color: "from-green-500 to-emerald-400"
     },
     {
-      icon: Sparkles,
-      title: "Style Challenges",
-      description: "Join weekly fashion challenges and compete with the community",
+      icon: Trophy,
+      title: "Style Competitions",
+      description: "Compete in fashion challenges, climb leaderboards, and earn rewards",
       color: "from-purple-500 to-pink-400"
     },
     {
-      icon: Trophy,
-      title: "Fashion Rewards",
-      description: "Earn style points, badges, and unlock exclusive features",
+      icon: UserPlus,
+      title: "Fashion Friends",
+      description: "Connect with style enthusiasts, follow friends, and discover new creators",
       color: "from-blue-500 to-cyan-400"
     }
   ];
 
   if (showResults) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-pink-900 to-purple-900 text-white">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
           <ResultsDisplay photoUrl={uploadedPhoto} onBack={() => setShowResults(false)} />
         </div>
@@ -75,76 +79,93 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-pink-900 to-purple-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 overflow-hidden">
       {/* Background Effects */}
-      <div className="fixed inset-0 opacity-20">
+      <div className="fixed inset-0 opacity-10">
         <div className="w-full h-full bg-repeat" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23EC4899' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
         }}></div>
       </div>
       
       {/* Header */}
-      <header className="relative z-10 p-6 flex justify-between items-center border-b border-white/10 backdrop-blur-sm">
+      <header className="relative z-10 p-6 flex justify-between items-center border-b border-border/20 backdrop-blur-sm bg-background/80">
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 instagram-gradient rounded-xl flex items-center justify-center">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             StyleMatch AI
           </h1>
         </div>
         
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 overflow-x-auto">
           <Button
             variant={activeView === 'home' ? 'default' : 'ghost'}
             onClick={() => setActiveView('home')}
-            className={activeView === 'home' ? 'bg-gradient-to-r from-pink-500 to-purple-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            className={activeView === 'home' ? 'instagram-gradient text-white' : 'hover:bg-accent/10'}
+            size="sm"
           >
             Home
           </Button>
           <Button
             variant={activeView === 'social' ? 'default' : 'ghost'}
             onClick={() => setActiveView('social')}
-            className={activeView === 'social' ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            className={activeView === 'social' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
           >
             <Users className="w-4 h-4 mr-2" />
             Social
           </Button>
           <Button
+            variant={activeView === 'friends' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('friends')}
+            className={activeView === 'friends' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
+          >
+            <UserPlus className="w-4 h-4 mr-2" />
+            Friends
+          </Button>
+          <Button
+            variant={activeView === 'challenges' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('challenges')}
+            className={activeView === 'challenges' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
+          >
+            <Zap className="w-4 h-4 mr-2" />
+            Challenges
+          </Button>
+          <Button
+            variant={activeView === 'leaderboard' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('leaderboard')}
+            className={activeView === 'leaderboard' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
+          >
+            <Trophy className="w-4 h-4 mr-2" />
+            Leaderboard
+          </Button>
+          <Button
+            variant={activeView === 'rewards' ? 'default' : 'ghost'}
+            onClick={() => setActiveView('rewards')}
+            className={activeView === 'rewards' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
+          >
+            <Award className="w-4 h-4 mr-2" />
+            Rewards
+          </Button>
+          <Button
             variant={activeView === 'trending' ? 'default' : 'ghost'}
             onClick={() => setActiveView('trending')}
-            className={activeView === 'trending' ? 'bg-gradient-to-r from-yellow-500 to-orange-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            className={activeView === 'trending' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
           >
             <TrendingUp className="w-4 h-4 mr-2" />
             Trending
           </Button>
           <Button
-            variant={activeView === 'fashion' ? 'default' : 'ghost'}
-            onClick={() => setActiveView('fashion')}
-            className={activeView === 'fashion' ? 'bg-gradient-to-r from-purple-500 to-pink-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
-          >
-            <Shirt className="w-4 h-4 mr-2" />
-            Fashion
-          </Button>
-          <Button
-            variant={activeView === 'tribes' ? 'default' : 'ghost'}
-            onClick={() => setActiveView('tribes')}
-            className={activeView === 'tribes' ? 'bg-gradient-to-r from-green-500 to-emerald-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
-          >
-            Tribes
-          </Button>
-          <Button
-            variant={activeView === 'boards' ? 'default' : 'ghost'}
-            onClick={() => setActiveView('boards')}
-            className={activeView === 'boards' ? 'bg-gradient-to-r from-red-500 to-rose-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
-          >
-            <Grid3X3 className="w-4 h-4 mr-2" />
-            Boards
-          </Button>
-          <Button
             variant={activeView === 'profile' ? 'default' : 'ghost'}
             onClick={() => setActiveView('profile')}
-            className={activeView === 'profile' ? 'bg-gradient-to-r from-indigo-500 to-blue-400 text-white' : 'text-white/80 hover:text-white hover:bg-white/10'}
+            className={activeView === 'profile' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent/10'}
+            size="sm"
           >
             <User className="w-4 h-4 mr-2" />
             Profile
@@ -160,34 +181,34 @@ const Index = () => {
           <>
             {/* Hero Section */}
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-pink-200 to-purple-300 bg-clip-text text-transparent leading-tight">
+              <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
                 Share Your Style
                 <br />
-                <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-                  Connect & Inspire
+                <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                  Win & Connect
                 </span>
               </h2>
-              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Join the ultimate fashion community. Share your outfits, discover trending styles, 
-                and connect with fashion enthusiasts from around the world!
+              <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                Join the ultimate fashion social network! Share outfits, compete in challenges, 
+                climb leaderboards, and connect with style creators worldwide.
               </p>
               
-              <div className="flex justify-center items-center space-x-6 mb-12">
-                <div className="flex items-center space-x-2 text-pink-300">
+              <div className="flex justify-center items-center space-x-6 mb-12 flex-wrap gap-4">
+                <div className="flex items-center space-x-2 text-primary">
                   <Camera className="w-5 h-5" />
                   <span>Share Outfits</span>
                 </div>
-                <div className="flex items-center space-x-2 text-purple-300">
+                <div className="flex items-center space-x-2 text-accent">
+                  <Trophy className="w-5 h-5" />
+                  <span>Win Challenges</span>
+                </div>
+                <div className="flex items-center space-x-2 text-primary">
                   <Users className="w-5 h-5" />
-                  <span>Style Community</span>
+                  <span>Connect Friends</span>
                 </div>
-                <div className="flex items-center space-x-2 text-blue-300">
-                  <TrendingUp className="w-5 h-5" />
-                  <span>Trending Styles</span>
-                </div>
-                <div className="flex items-center space-x-2 text-green-300">
+                <div className="flex items-center space-x-2 text-accent">
                   <Heart className="w-5 h-5" />
-                  <span>Fashion Love</span>
+                  <span>Get Likes</span>
                 </div>
               </div>
             </div>
@@ -213,15 +234,15 @@ const Index = () => {
 
             {/* Social Proof */}
             <div className="text-center">
-              <p className="text-gray-400 mb-4">Join the fashion revolution</p>
-              <div className="flex justify-center items-center space-x-8 opacity-60">
-                <div className="text-2xl font-bold text-pink-400">500K+</div>
-                <div className="text-gray-500">•</div>
-                <div className="text-2xl font-bold text-purple-400">2M+</div>
-                <div className="text-gray-500">•</div>
-                <div className="text-2xl font-bold text-cyan-400">50K+</div>
+              <p className="text-muted-foreground mb-4">Join the fashion revolution</p>
+              <div className="flex justify-center items-center space-x-8 opacity-80">
+                <div className="text-2xl font-bold text-primary">500K+</div>
+                <div className="text-muted-foreground">•</div>
+                <div className="text-2xl font-bold text-accent">2M+</div>
+                <div className="text-muted-foreground">•</div>
+                <div className="text-2xl font-bold text-primary">50K+</div>
               </div>
-              <div className="flex justify-center items-center space-x-8 text-sm text-gray-500 mt-2">
+              <div className="flex justify-center items-center space-x-8 text-sm text-muted-foreground mt-2">
                 <span>Style Posts</span>
                 <span>Likes & Saves</span>
                 <span>Fashion Creators</span>
@@ -231,6 +252,10 @@ const Index = () => {
         )}
 
         {activeView === 'social' && <SocialFeed />}
+        {activeView === 'friends' && <FriendsSystem />}
+        {activeView === 'challenges' && <MiniChallenges />}
+        {activeView === 'leaderboard' && <Leaderboard />}
+        {activeView === 'rewards' && <GameRewards />}
         {activeView === 'fashion' && <FashionFeed />}
         {activeView === 'trending' && <TrendingOutfits />}
         {activeView === 'tribes' && <StyleTribes />}
@@ -240,7 +265,7 @@ const Index = () => {
 
       {/* Floating Action Button */}
       <Button 
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-400 hover:from-pink-600 hover:to-purple-500 shadow-2xl shadow-pink-500/25 z-20"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full instagram-gradient hover:opacity-90 shadow-2xl shadow-primary/25 z-20"
         onClick={() => {
           setActiveView('home');
           setShowResults(false);
