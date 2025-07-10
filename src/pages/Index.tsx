@@ -12,11 +12,12 @@ import StyleTribes from '@/components/StyleTribes';
 import StyleBoards from '@/components/StyleBoards';
 import TrendingOutfits from '@/components/TrendingOutfits';
 import UserProfile from '@/components/UserProfile';
+import FashionSocialLanding from '@/components/FashionSocialLanding';
 
 const Index = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [showPostCreation, setShowPostCreation] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'social' | 'fashion' | 'trending' | 'tribes' | 'boards' | 'profile' | 'fashion-social'>('home');
 
   const handlePhotoUpload = (photoUrl: string) => {
     setUploadedPhoto(photoUrl);
@@ -29,6 +30,12 @@ const Index = () => {
     setShowPostCreation(false);
     setUploadedPhoto(null);
     setActiveView('home');
+  };
+
+  const handleFeatureCardClick = (featureTitle: string) => {
+    if (featureTitle === "Fashion Social Feed") {
+      setActiveView('fashion-social');
+    }
   };
 
   const features = [
@@ -200,14 +207,15 @@ const Index = () => {
             {/* Features Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {features.map((feature, index) => (
-                <FeatureCard
-                  key={index}
-                  icon={feature.icon}
-                  title={feature.title}
-                  description={feature.description}
-                  color={feature.color}
-                  delay={index * 0.1}
-                />
+                <div key={index} onClick={() => handleFeatureCardClick(feature.title)} className="cursor-pointer">
+                  <FeatureCard
+                    icon={feature.icon}
+                    title={feature.title}
+                    description={feature.description}
+                    color={feature.color}
+                    delay={index * 0.1}
+                  />
+                </div>
               ))}
             </div>
 
@@ -236,6 +244,7 @@ const Index = () => {
         {activeView === 'tribes' && <StyleTribes />}
         {activeView === 'boards' && <StyleBoards />}
         {activeView === 'profile' && <UserProfile />}
+        {activeView === 'fashion-social' && <FashionSocialLanding onBackToHome={() => setActiveView('home')} />}
       </div>
 
       {/* Floating Action Button */}
