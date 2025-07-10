@@ -72,6 +72,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={openFileDialog}
+        data-upload-trigger
       >
         <CardContent className="p-12 text-center">
           {uploading ? (
